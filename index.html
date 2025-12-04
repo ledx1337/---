@@ -433,6 +433,32 @@
             border-radius: 8px;
         }
         
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1877f2;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #65676b;
+            margin-top: 5px;
+        }
+        
         /* Для телефонов */
         @media (max-width: 768px) {
             .content-grid {
@@ -456,6 +482,10 @@
             .modal-content {
                 padding: 20px;
                 margin: 20px auto;
+            }
+            
+            .user-stats {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -534,6 +564,36 @@
             text-align: center;
             margin-bottom: 25px;
             color: #2c3e50;
+        }
+        
+        /* Поиск и фильтры */
+        .filters {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 2px solid #dddfe2;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .filter-select {
+            padding: 10px;
+            border: 2px solid #dddfe2;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
         }
     </style>
 </head>
@@ -765,6 +825,15 @@
                 phone: "+7 999 111-11-11",
                 role: "editor",
                 registered: "2024-01-05"
+            },
+            {
+                id: "user_1",
+                name: "Иван Иванов",
+                email: "ivan@mail.ru",
+                password: "user123",
+                phone: "+7 900 123-45-67",
+                role: "user",
+                registered: "2024-01-10"
             }
         ];
         
@@ -800,7 +869,7 @@
                 category: "auto",
                 location: "Томпо, Якутия",
                 phone: "+7 900 123-45-67",
-                contactName: "Иван",
+                contactName: "Иван Иванов",
                 userId: "user_1",
                 date: "2024-01-15",
                 views: 124
@@ -813,7 +882,7 @@
                 category: "home",
                 location: "Томпо, Якутия",
                 phone: "+7 911 234-56-78",
-                contactName: "Мария",
+                contactName: "Мария Петрова",
                 userId: "user_2",
                 date: "2024-01-14",
                 views: 89
@@ -991,7 +1060,10 @@
         function renderNews() {
             const container = document.getElementById('contentContainer');
             
-            if (news.length === 0) {
+            // Все новости видны всем (даже гостям)
+            const allNews = news;
+            
+            if (allNews.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">📰</div>
@@ -1007,7 +1079,7 @@
             }
             
             // Сортируем новости по дате (новые сначала)
-            const sortedNews = [...news].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const sortedNews = [...allNews].sort((a, b) => new Date(b.date) - new Date(a.date));
             
             container.innerHTML = `
                 <div class="content-grid">
@@ -1039,8 +1111,38 @@
         function renderAds() {
             const container = document.getElementById('contentContainer');
             
-            if (ads.length === 0) {
+            // Все объявления видны всем (даже гостям)
+            const allAds = ads;
+            
+            // Фильтры для объявлений
+            const filtersHTML = `
+                <div class="filters">
+                    <input type="text" 
+                           class="search-input" 
+                           placeholder="🔍 Поиск по названию..." 
+                           id="searchAdsInput"
+                           oninput="filterAds()">
+                    <select class="filter-select" id="categoryFilter" onchange="filterAds()">
+                        <option value="">Все категории</option>
+                        <option value="electronics">📱 Электроника</option>
+                        <option value="clothes">👕 Одежда</option>
+                        <option value="home">🏠 Для дома</option>
+                        <option value="auto">🚗 Авто</option>
+                        <option value="services">🛠️ Услуги</option>
+                        <option value="other">📦 Разное</option>
+                    </select>
+                    <select class="filter-select" id="sortFilter" onchange="filterAds()">
+                        <option value="newest">Сначала новые</option>
+                        <option value="oldest">Сначала старые</option>
+                        <option value="price_asc">Цена по возрастанию</option>
+                        <option value="price_desc">Цена по убыванию</option>
+                    </select>
+                </div>
+            `;
+            
+            if (allAds.length === 0) {
                 container.innerHTML = `
+                    ${filtersHTML}
                     <div class="empty-state">
                         <div class="empty-icon">📦</div>
                         <h3>Объявлений пока нет</h3>
@@ -1054,12 +1156,13 @@
                 return;
             }
             
-            // Сортируем объявления по дате (новые сначала)
-            const sortedAds = [...ads].sort((a, b) => new Date(b.date) - new Date(a.date));
+            // Показываем все объявления (они уже видны всем)
+            const filteredAds = filterAdsList(allAds);
             
             container.innerHTML = `
+                ${filtersHTML}
                 <div class="content-grid">
-                    ${sortedAds.map(item => `
+                    ${filteredAds.map(item => `
                         <div class="ad-card" onclick="viewAd(${item.id})">
                             <div class="card-header">
                                 <h3 class="ad-title">${item.title}</h3>
@@ -1082,6 +1185,52 @@
             `;
         }
         
+        function filterAdsList(adsList) {
+            const searchTerm = document.getElementById('searchAdsInput')?.value.toLowerCase() || '';
+            const category = document.getElementById('categoryFilter')?.value || '';
+            const sortBy = document.getElementById('sortFilter')?.value || 'newest';
+            
+            let filtered = [...adsList];
+            
+            // Фильтр по поиску
+            if (searchTerm) {
+                filtered = filtered.filter(ad => 
+                    ad.title.toLowerCase().includes(searchTerm) ||
+                    ad.description.toLowerCase().includes(searchTerm) ||
+                    (ad.contactName && ad.contactName.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Фильтр по категории
+            if (category) {
+                filtered = filtered.filter(ad => ad.category === category);
+            }
+            
+            // Сортировка
+            switch(sortBy) {
+                case 'newest':
+                    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'oldest':
+                    filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                case 'price_asc':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price_desc':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+            }
+            
+            return filtered;
+        }
+        
+        function filterAds() {
+            if (currentTab === 'ads') {
+                renderAds();
+            }
+        }
+        
         function renderAdminPanel() {
             if (!currentUser || currentUser.role !== 'admin') {
                 switchTab('news');
@@ -1089,42 +1238,96 @@
             }
             
             const container = document.getElementById('contentContainer');
-            const regularUsers = users.filter(u => u.role === 'user');
+            
+            // Статистика
+            const totalUsers = users.length;
+            const regularUsers = users.filter(u => u.role === 'user').length;
+            const editors = users.filter(u => u.role === 'editor').length;
+            const admins = users.filter(u => u.role === 'admin').length;
+            const totalNews = news.length;
+            const totalAds = ads.length;
             
             container.innerHTML = `
                 <div class="admin-panel">
-                    <h3>Управление пользователями</h3>
-                    <div class="user-list">
-                        ${regularUsers.map(user => `
-                            <div class="user-item">
-                                <div>
-                                    <strong>${user.name}</strong><br>
-                                    <small>${user.email} • Зарегистрирован: ${formatDate(user.registered)}</small>
-                                </div>
-                                <button class="btn btn-primary" onclick="makeEditor('${user.id}')">
-                                    Назначить редактором
-                                </button>
-                            </div>
-                        `).join('')}
-                        ${regularUsers.length === 0 ? '<p>Нет обычных пользователей</p>' : ''}
+                    <h3>Статистика системы</h3>
+                    <div class="user-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">${totalUsers}</div>
+                            <div class="stat-label">Всего пользователей</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${regularUsers}</div>
+                            <div class="stat-label">Обычные пользователи</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${editors}</div>
+                            <div class="stat-label">Редакторы</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${admins}</div>
+                            <div class="stat-label">Администраторы</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${totalNews}</div>
+                            <div class="stat-label">Новостей</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${totalAds}</div>
+                            <div class="stat-label">Объявлений</div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="admin-panel" style="margin-top: 20px;">
-                    <h3>Редакторы</h3>
+                    <h3>Все пользователи</h3>
                     <div class="user-list">
-                        ${users.filter(u => u.role === 'editor').map(user => `
+                        ${users.map(user => `
                             <div class="user-item">
                                 <div>
-                                    <strong>${user.name}</strong><br>
-                                    <small>${user.email} • Редактор</small>
+                                    <strong>${user.name}</strong>
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <span style="font-size: 12px; color: #65676b;">${user.email}</span>
+                                        <span style="font-size: 12px; padding: 2px 6px; border-radius: 10px; 
+                                              background: ${user.role === 'admin' ? '#dc3545' : user.role === 'editor' ? '#1877f2' : '#42b72a'}; 
+                                              color: white;">
+                                            ${user.role === 'admin' ? 'Админ' : user.role === 'editor' ? 'Редактор' : 'Пользователь'}
+                                        </span>
+                                    </div>
+                                    <small style="color: #8a8d91;">Зарегистрирован: ${formatDate(user.registered)}</small>
                                 </div>
-                                <button class="btn btn-danger" onclick="removeEditor('${user.id}')">
-                                    Убрать права редактора
-                                </button>
+                                <div>
+                                    ${user.role === 'user' ? `
+                                        <button class="btn btn-primary" onclick="makeEditor('${user.id}')">
+                                            Назначить редактором
+                                        </button>
+                                    ` : user.role === 'editor' ? `
+                                        <button class="btn btn-danger" onclick="removeEditor('${user.id}')">
+                                            Убрать права редактора
+                                        </button>
+                                    ` : ''}
+                                    ${user.role !== 'admin' ? `
+                                        <button class="btn btn-secondary" onclick="deleteUser('${user.id}')" style="margin-left: 10px;">
+                                            Удалить
+                                        </button>
+                                    ` : ''}
+                                </div>
                             </div>
                         `).join('')}
-                        ${users.filter(u => u.role === 'editor').length === 0 ? '<p>Нет редакторов</p>' : ''}
+                    </div>
+                </div>
+                
+                <div class="admin-panel" style="margin-top: 20px;">
+                    <h3>Управление контентом</h3>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button class="btn btn-secondary" onclick="showAllContent()">
+                            Просмотреть все объявления
+                        </button>
+                        <button class="btn btn-secondary" onclick="showAllNews()">
+                            Просмотреть все новости
+                        </button>
+                    </div>
+                    <div style="color: #8a8d91; font-size: 14px;">
+                        <p>Администратор может удалять любые новости и объявления через просмотр.</p>
                     </div>
                 </div>
             `;
@@ -1193,7 +1396,7 @@
             const price = parseInt(document.getElementById('adPrice').value);
             const category = document.getElementById('adCategory').value;
             const location = document.getElementById('adLocation').value;
-            const phone = document.getElementById('adPhone').value;
+            const phone = document.getElementById('adPhone').value || currentUser.phone;
             
             const newAd = {
                 id: Date.now(),
@@ -1203,7 +1406,7 @@
                 category: category,
                 location: location,
                 phone: phone,
-                contactName: currentUser.name,
+                contactName: currentUser.name, // Сохраняем имя из профиля
                 userId: currentUser.id,
                 date: new Date().toISOString().split('T')[0],
                 views: 0
@@ -1213,8 +1416,8 @@
             saveData();
             
             closeModal();
-            showNotification('Объявление успешно опубликовано!');
-            loadContent();
+            showNotification('Объявление успешно опубликовано! Все пользователи видят его.');
+            switchTab('ads');
             
             // Сбрасываем форму
             document.getElementById('createAdForm').reset();
@@ -1349,6 +1552,20 @@
                 user.role = 'user';
                 saveData();
                 showNotification(`${user.name} больше не редактор`);
+                renderAdminPanel();
+            }
+        }
+        
+        function deleteUser(userId) {
+            if (userId === currentUser.id) {
+                showNotification('Вы не можете удалить свой аккаунт');
+                return;
+            }
+            
+            if (confirm('Удалить этого пользователя? Все его новости и объявления останутся.')) {
+                users = users.filter(u => u.id !== userId);
+                saveData();
+                showNotification('Пользователь удален');
                 renderAdminPanel();
             }
         }
@@ -1494,6 +1711,60 @@
                             </div>
                         ` : '<p>У вас нет опубликованных объявлений</p>'}
                     </div>
+                </div>
+            `;
+        }
+        
+        function showAllContent() {
+            const container = document.getElementById('contentContainer');
+            
+            container.innerHTML = `
+                <div class="detail-container">
+                    <h2 style="margin-bottom: 20px;">📦 Все объявления (${ads.length})</h2>
+                    
+                    ${ads.length > 0 ? `
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            ${ads.map(item => `
+                                <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>${item.title}</strong><br>
+                                        <small>${formatDate(item.date)} • 👁 ${item.views} просмотров • ${formatPrice(item.price)} • Автор: ${item.contactName}</small>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-secondary" onclick="viewAd(${item.id})" style="padding: 5px 10px; font-size: 12px;">Просмотреть</button>
+                                        <button class="btn btn-danger" onclick="deleteAd(${item.id})" style="padding: 5px 10px; font-size: 12px;">Удалить</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : '<p>Нет объявлений</p>'}
+                </div>
+            `;
+        }
+        
+        function showAllNews() {
+            const container = document.getElementById('contentContainer');
+            
+            container.innerHTML = `
+                <div class="detail-container">
+                    <h2 style="margin-bottom: 20px;">📰 Все новости (${news.length})</h2>
+                    
+                    ${news.length > 0 ? `
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            ${news.map(item => `
+                                <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>${item.title}</strong><br>
+                                        <small>${formatDate(item.date)} • 👁 ${item.views} просмотров • Автор: ${item.authorName}</small>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-secondary" onclick="viewNews(${item.id})" style="padding: 5px 10px; font-size: 12px;">Просмотреть</button>
+                                        <button class="btn btn-danger" onclick="deleteNews(${item.id})" style="padding: 5px 10px; font-size: 12px;">Удалить</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : '<p>Нет новостей</p>'}
                 </div>
             `;
         }
