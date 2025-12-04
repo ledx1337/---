@@ -595,6 +595,152 @@
             font-size: 14px;
             background: white;
         }
+
+        /* НОВЫЕ СТИЛИ ДЛЯ ФИЛЬТРОВ НОВОСТЕЙ */
+        .filter-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .filter-section h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .category-tag {
+            padding: 8px 15px;
+            background: #f0f2f5;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .category-tag:hover {
+            background: #e4e6eb;
+        }
+
+        .category-tag.active {
+            background: #1877f2;
+            color: white;
+        }
+
+        .date-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 8px 12px;
+            border: 2px solid #dddfe2;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-call {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-message {
+            background: #0088cc;
+            color: white;
+        }
+
+        .btn-copy {
+            background: #6c757d;
+            color: white;
+        }
+
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .filter-badge {
+            background: #e7f3ff;
+            color: #1877f2;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .time-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .time-btn {
+            padding: 8px 15px;
+            background: #f0f2f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .time-btn:hover {
+            background: #e4e6eb;
+        }
+
+        .time-btn.active {
+            background: #1877f2;
+            color: white;
+        }
+        
+        .icon {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -614,22 +760,22 @@
             </div>
         </div>
         <div class="action-buttons" id="authButtons">
-            <button class="btn btn-primary" onclick="showAuthModal()">🔐 Войти</button>
-            <button class="btn btn-secondary" onclick="showRegModal()">📝 Регистрация</button>
+            <button class="btn btn-primary" onclick="showAuthModal()">Войти</button>
+            <button class="btn btn-secondary" onclick="showRegModal()">Регистрация</button>
         </div>
         <div class="action-buttons" id="userButtons" style="display: none;">
-            <button class="btn btn-success" id="createNewsBtn" onclick="showCreateNewsForm()" style="display: none;">📰 Создать новость</button>
-            <button class="btn btn-success" onclick="showCreateAdForm()">📦 Создать объявление</button>
-            <button class="btn btn-secondary" onclick="showMyContent()">👤 Мои публикации</button>
-            <button class="btn btn-danger" onclick="logout()">🚪 Выйти</button>
+            <button class="btn btn-success" id="createNewsBtn" onclick="showCreateNewsForm()" style="display: none;">Создать новость</button>
+            <button class="btn btn-success" onclick="showCreateAdForm()">Создать объявление</button>
+            <button class="btn btn-secondary" onclick="showMyContent()">Мои публикации</button>
+            <button class="btn btn-danger" onclick="logout()">Выйти</button>
         </div>
     </div>
     
     <!-- Вкладки -->
     <div class="tabs">
-        <div class="tab active" onclick="switchTab('news')" id="newsTab">📰 Новости</div>
-        <div class="tab" onclick="switchTab('ads')" id="adsTab">📦 Объявления</div>
-        <div class="tab" onclick="switchTab('admin')" id="adminTab" style="display: none;">⚙️ Админ-панель</div>
+        <div class="tab active" onclick="switchTab('news')" id="newsTab">Новости</div>
+        <div class="tab" onclick="switchTab('ads')" id="adsTab">Объявления</div>
+        <div class="tab" onclick="switchTab('admin')" id="adminTab" style="display: none;">Админ-панель</div>
     </div>
     
     <!-- Контейнер для контента -->
@@ -655,7 +801,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">
-                        🔐 Войти
+                        Войти
                     </button>
                 </div>
                 <div style="text-align: center; margin-top: 15px;">
@@ -694,7 +840,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" style="width: 100%; padding: 15px;">
-                        📝 Зарегистрироваться
+                        Зарегистрироваться
                     </button>
                 </div>
                 <div style="text-align: center; margin-top: 15px;">
@@ -724,16 +870,20 @@
                 <div class="form-group">
                     <label>Категория</label>
                     <select class="form-control" id="newsCategory">
-                        <option value="general">📰 Общие новости</option>
-                        <option value="events">🎉 Мероприятия</option>
-                        <option value="important">⚠️ Важная информация</option>
-                        <option value="culture">🎭 Культура</option>
-                        <option value="sports">⚽ Спорт</option>
+                        <option value="general">Общие новости</option>
+                        <option value="events">Мероприятия</option>
+                        <option value="important">Важная информация</option>
+                        <option value="culture">Культура</option>
+                        <option value="sports">Спорт</option>
+                        <option value="politics">Политика</option>
+                        <option value="economy">Экономика</option>
+                        <option value="education">Образование</option>
+                        <option value="health">Здоровье</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" style="width: 100%; padding: 15px;">
-                        📰 Опубликовать новость
+                        Опубликовать новость
                     </button>
                 </div>
             </form>
@@ -764,12 +914,12 @@
                 <div class="form-group">
                     <label>Категория</label>
                     <select class="form-control" id="adCategory">
-                        <option value="electronics">📱 Электроника</option>
-                        <option value="clothes">👕 Одежда</option>
-                        <option value="home">🏠 Для дома</option>
-                        <option value="auto">🚗 Авто</option>
-                        <option value="services">🛠️ Услуги</option>
-                        <option value="other" selected>📦 Разное</option>
+                        <option value="electronics">Электроника</option>
+                        <option value="clothes">Одежда</option>
+                        <option value="home">Для дома</option>
+                        <option value="auto">Авто</option>
+                        <option value="services">Услуги</option>
+                        <option value="other" selected>Разное</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -784,7 +934,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" style="width: 100%; padding: 15px;">
-                        📦 Опубликовать объявление
+                        Опубликовать объявление
                     </button>
                 </div>
             </form>
@@ -845,7 +995,7 @@
                 category: "important",
                 authorId: "editor_1",
                 authorName: "Редактор Новостей",
-                date: "2024-01-15",
+                date: new Date().toISOString().split('T')[0], // Сегодняшняя дата
                 views: 156
             },
             {
@@ -855,8 +1005,28 @@
                 category: "events",
                 authorId: "editor_1",
                 authorName: "Редактор Новостей",
-                date: "2024-01-14",
+                date: new Date(Date.now() - 86400000).toISOString().split('T')[0], // Вчера
                 views: 89
+            },
+            {
+                id: 3,
+                title: "Новые спортивные площадки в районе",
+                content: "В рамках программы развития спорта в районе установлены новые спортивные площадки с современным оборудованием.",
+                category: "sports",
+                authorId: "editor_1",
+                authorName: "Редактор Новостей",
+                date: new Date(Date.now() - 172800000).toISOString().split('T')[0], // 2 дня назад
+                views: 45
+            },
+            {
+                id: 4,
+                title: "Обсуждение нового бюджета района",
+                content: "На этой неделе состоится общественное обсуждение бюджета района на следующий год.",
+                category: "politics",
+                authorId: "editor_1",
+                authorName: "Редактор Новостей",
+                date: new Date(Date.now() - 259200000).toISOString().split('T')[0], // 3 дня назад
+                views: 67
             }
         ];
         
@@ -871,7 +1041,7 @@
                 phone: "+7 900 123-45-67",
                 contactName: "Иван Иванов",
                 userId: "user_1",
-                date: "2024-01-15",
+                date: new Date().toISOString().split('T')[0],
                 views: 124
             },
             {
@@ -884,7 +1054,7 @@
                 phone: "+7 911 234-56-78",
                 contactName: "Мария Петрова",
                 userId: "user_2",
-                date: "2024-01-14",
+                date: new Date().toISOString().split('T')[0],
                 views: 89
             }
         ];
@@ -899,6 +1069,12 @@
         // Текущий пользователь
         let currentUser = JSON.parse(localStorage.getItem('current_user')) || null;
         let currentTab = 'news';
+        
+        // Переменные для фильтров новостей
+        let selectedCategories = [];
+        let timeFilter = 'all';
+        let dateFrom = '';
+        let dateTo = '';
 
         // ========================
         // СИСТЕМА АВТОРИЗАЦИИ
@@ -1046,8 +1222,6 @@
         // ========================
         
         function loadContent() {
-            const container = document.getElementById('contentContainer');
-            
             if (currentTab === 'news') {
                 renderNews();
             } else if (currentTab === 'ads') {
@@ -1057,39 +1231,283 @@
             }
         }
         
-        function renderNews() {
-            const container = document.getElementById('contentContainer');
+        // ========================
+        // ФУНКЦИИ ДЛЯ ФИЛЬТРАЦИИ НОВОСТЕЙ
+        // ========================
+        
+        function refreshNews() {
+            // В реальном приложении здесь был бы запрос к серверу
+            // Для демо просто перезагружаем контент
+            loadContent();
+            showNotification('Новости обновлены');
+        }
+        
+        function toggleCategory(category) {
+            const index = selectedCategories.indexOf(category);
+            if (index === -1) {
+                selectedCategories.push(category);
+            } else {
+                selectedCategories.splice(index, 1);
+            }
+            applyNewsFilters();
+        }
+        
+        function setTimeFilter(filter) {
+            timeFilter = filter;
+            applyNewsFilters();
+        }
+        
+        function setDateFrom(date) {
+            dateFrom = date;
+            applyNewsFilters();
+        }
+        
+        function setDateTo(date) {
+            dateTo = date;
+            applyNewsFilters();
+        }
+        
+        function applyNewsFilters() {
+            // Сначала обновляем UI кнопок
+            updateFilterUI();
             
-            // Все новости видны всем (даже гостям)
-            const allNews = news;
+            // Затем перерисовываем новости
+            renderNews();
+        }
+        
+        function resetNewsFilters() {
+            selectedCategories = [];
+            timeFilter = 'all';
+            dateFrom = '';
+            dateTo = '';
             
-            if (allNews.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">📰</div>
-                        <h3>Новостей пока нет</h3>
-                        <p>Будьте первым, кто опубликует новость для жителей Томпо!</p>
-                        ${currentUser && (currentUser.role === 'editor' || currentUser.role === 'admin') ? 
-                            `<button class="btn btn-success" onclick="showCreateNewsForm()">📰 Создать первую новость</button>` : 
-                            `<p style="color: #8a8d91;">Только редакторы могут публиковать новости</p>`
-                        }
-                    </div>
-                `;
-                return;
+            // Сбрасываем UI
+            updateFilterUI();
+            applyNewsFilters();
+        }
+        
+        function updateFilterUI() {
+            // Обновляем активные категории
+            document.querySelectorAll('.category-tag').forEach(tag => {
+                const category = tag.getAttribute('data-category');
+                if (selectedCategories.includes(category)) {
+                    tag.classList.add('active');
+                } else {
+                    tag.classList.remove('active');
+                }
+            });
+            
+            // Обновляем активные кнопки времени
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                if (btn.getAttribute('data-filter') === timeFilter) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Обновляем даты в полях ввода
+            if (document.getElementById('dateFrom')) {
+                document.getElementById('dateFrom').value = dateFrom;
+            }
+            if (document.getElementById('dateTo')) {
+                document.getElementById('dateTo').value = dateTo;
+            }
+            
+            // Обновляем отображение активных фильтров
+            updateActiveFiltersDisplay();
+        }
+        
+        function updateActiveFiltersDisplay() {
+            const container = document.getElementById('activeFilters');
+            if (!container) return;
+            
+            let filtersHTML = '';
+            
+            // Фильтры по времени
+            if (timeFilter !== 'all') {
+                const timeLabels = {
+                    'today': 'Сегодня',
+                    'yesterday': 'Вчера',
+                    'week': 'За неделю',
+                    'month': 'За месяц'
+                };
+                filtersHTML += `<div class="filter-badge">${timeLabels[timeFilter]}</div>`;
+            }
+            
+            // Фильтры по датам
+            if (dateFrom) {
+                filtersHTML += `<div class="filter-badge">С ${formatDisplayDate(dateFrom)}</div>`;
+            }
+            if (dateTo) {
+                filtersHTML += `<div class="filter-badge">По ${formatDisplayDate(dateTo)}</div>`;
+            }
+            
+            // Фильтры по категориям
+            selectedCategories.forEach(category => {
+                const categoryNames = {
+                    'general': 'Общие',
+                    'events': 'Мероприятия',
+                    'important': 'Важные',
+                    'culture': 'Культура',
+                    'sports': 'Спорт',
+                    'politics': 'Политика',
+                    'economy': 'Экономика',
+                    'education': 'Образование',
+                    'health': 'Здоровье'
+                };
+                filtersHTML += `<div class="filter-badge">${categoryNames[category]}</div>`;
+            });
+            
+            container.innerHTML = filtersHTML || '<div style="color: #8a8d91; font-size: 14px;">Нет активных фильтров</div>';
+        }
+        
+        function getFilteredNews() {
+            let filteredNews = [...news];
+            
+            // Фильтр по времени
+            if (timeFilter !== 'all') {
+                const now = new Date();
+                filteredNews = filteredNews.filter(item => {
+                    const itemDate = new Date(item.date);
+                    const diffTime = now - itemDate;
+                    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+                    
+                    switch(timeFilter) {
+                        case 'today':
+                            return diffDays < 1;
+                        case 'yesterday':
+                            return diffDays >= 1 && diffDays < 2;
+                        case 'week':
+                            return diffDays < 7;
+                        case 'month':
+                            return diffDays < 30;
+                        default:
+                            return true;
+                    }
+                });
+            }
+            
+            // Фильтр по датам
+            if (dateFrom) {
+                const fromDate = new Date(dateFrom);
+                filteredNews = filteredNews.filter(item => new Date(item.date) >= fromDate);
+            }
+            
+            if (dateTo) {
+                const toDate = new Date(dateTo);
+                toDate.setHours(23, 59, 59, 999); // До конца дня
+                filteredNews = filteredNews.filter(item => new Date(item.date) <= toDate);
+            }
+            
+            // Фильтр по категориям
+            if (selectedCategories.length > 0) {
+                filteredNews = filteredNews.filter(item => selectedCategories.includes(item.category));
             }
             
             // Сортируем новости по дате (новые сначала)
-            const sortedNews = [...allNews].sort((a, b) => new Date(b.date) - new Date(a.date));
+            return filteredNews.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        function renderNews() {
+            const container = document.getElementById('contentContainer');
+            
+            const filteredNews = getFilteredNews();
+            
+            // Генерируем HTML для панели фильтров
+            const filtersHTML = `
+                <div class="filter-panel">
+                    <div class="filter-section">
+                        <h4>Фильтр по времени</h4>
+                        <div class="time-filter">
+                            <button class="time-btn ${timeFilter === 'all' ? 'active' : ''}" data-filter="all" onclick="setTimeFilter('all')">За всё время</button>
+                            <button class="time-btn ${timeFilter === 'today' ? 'active' : ''}" data-filter="today" onclick="setTimeFilter('today')">Сегодня</button>
+                            <button class="time-btn ${timeFilter === 'yesterday' ? 'active' : ''}" data-filter="yesterday" onclick="setTimeFilter('yesterday')">Вчера</button>
+                            <button class="time-btn ${timeFilter === 'week' ? 'active' : ''}" data-filter="week" onclick="setTimeFilter('week')">За неделю</button>
+                            <button class="time-btn ${timeFilter === 'month' ? 'active' : ''}" data-filter="month" onclick="setTimeFilter('month')">За месяц</button>
+                        </div>
+                        
+                        <h4 style="margin-top: 15px;">Фильтр по датам</h4>
+                        <div class="date-filter">
+                            <div>
+                                <label style="font-size: 12px; color: #65676b; display: block; margin-bottom: 5px;">С:</label>
+                                <input type="date" class="date-input" id="dateFrom" onchange="setDateFrom(this.value)">
+                            </div>
+                            <div>
+                                <label style="font-size: 12px; color: #65676b; display: block; margin-bottom: 5px;">По:</label>
+                                <input type="date" class="date-input" id="dateTo" onchange="setDateTo(this.value)">
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 15px;">Категории</h4>
+                        <div class="category-filters">
+                            <div class="category-tag ${selectedCategories.includes('general') ? 'active' : ''}" data-category="general" onclick="toggleCategory('general')">
+                                Общие
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('events') ? 'active' : ''}" data-category="events" onclick="toggleCategory('events')">
+                                Мероприятия
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('important') ? 'active' : ''}" data-category="important" onclick="toggleCategory('important')">
+                                Важные
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('culture') ? 'active' : ''}" data-category="culture" onclick="toggleCategory('culture')">
+                                Культура
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('sports') ? 'active' : ''}" data-category="sports" onclick="toggleCategory('sports')">
+                                Спорт
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('politics') ? 'active' : ''}" data-category="politics" onclick="toggleCategory('politics')">
+                                Политика
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('economy') ? 'active' : ''}" data-category="economy" onclick="toggleCategory('economy')">
+                                Экономика
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('education') ? 'active' : ''}" data-category="education" onclick="toggleCategory('education')">
+                                Образование
+                            </div>
+                            <div class="category-tag ${selectedCategories.includes('health') ? 'active' : ''}" data-category="health" onclick="toggleCategory('health')">
+                                Здоровье
+                            </div>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <button class="btn btn-primary" onclick="applyNewsFilters()">Применить фильтры</button>
+                            <button class="btn btn-secondary" onclick="resetNewsFilters()">Сбросить фильтры</button>
+                            <button class="btn btn-success refresh-btn" onclick="refreshNews()">
+                                Обновить новости
+                            </button>
+                        </div>
+                        
+                        <div id="activeFilters" class="active-filters"></div>
+                    </div>
+                </div>
+            `;
+            
+            if (filteredNews.length === 0) {
+                container.innerHTML = `
+                    ${filtersHTML}
+                    <div class="empty-state">
+                        <div class="empty-icon">📰</div>
+                        <h3>Новостей не найдено</h3>
+                        <p>Попробуйте изменить параметры фильтров</p>
+                        <button class="btn btn-secondary" onclick="resetNewsFilters()">Сбросить фильтры</button>
+                    </div>
+                `;
+                updateFilterUI();
+                return;
+            }
             
             container.innerHTML = `
+                ${filtersHTML}
                 <div class="content-grid">
-                    ${sortedNews.map(item => `
+                    ${filteredNews.map(item => `
                         <div class="news-card" onclick="viewNews(${item.id})">
                             <div class="card-header">
                                 <h3 class="news-title">${item.title}</h3>
                                 <div class="news-date">
-                                    <span>📅 ${formatDate(item.date)}</span>
-                                    <span>👁 ${item.views || 0}</span>
+                                    <span>${formatDate(item.date)}</span>
+                                    <span>${item.views || 0} просмотров</span>
+                                    <span>${getCategoryName(item.category)}</span>
                                 </div>
                             </div>
                             <div class="card-content">
@@ -1100,12 +1518,16 @@
                                     <div class="author-avatar">${getInitials(item.authorName)}</div>
                                     <span>${item.authorName}</span>
                                 </div>
-                                <span>${getCategoryName(item.category)}</span>
+                                <span style="font-size: 12px; color: #65676b;">
+                                    ${timeAgo(new Date(item.date))}
+                                </span>
                             </div>
                         </div>
                     `).join('')}
                 </div>
             `;
+            
+            updateFilterUI();
         }
         
         function renderAds() {
@@ -1119,17 +1541,17 @@
                 <div class="filters">
                     <input type="text" 
                            class="search-input" 
-                           placeholder="🔍 Поиск по названию..." 
+                           placeholder="Поиск по названию..." 
                            id="searchAdsInput"
                            oninput="filterAds()">
                     <select class="filter-select" id="categoryFilter" onchange="filterAds()">
                         <option value="">Все категории</option>
-                        <option value="electronics">📱 Электроника</option>
-                        <option value="clothes">👕 Одежда</option>
-                        <option value="home">🏠 Для дома</option>
-                        <option value="auto">🚗 Авто</option>
-                        <option value="services">🛠️ Услуги</option>
-                        <option value="other">📦 Разное</option>
+                        <option value="electronics">Электроника</option>
+                        <option value="clothes">Одежда</option>
+                        <option value="home">Для дома</option>
+                        <option value="auto">Авто</option>
+                        <option value="services">Услуги</option>
+                        <option value="other">Разное</option>
                     </select>
                     <select class="filter-select" id="sortFilter" onchange="filterAds()">
                         <option value="newest">Сначала новые</option>
@@ -1148,8 +1570,8 @@
                         <h3>Объявлений пока нет</h3>
                         <p>Создайте первое объявление для жителей Томпо!</p>
                         ${currentUser ? 
-                            `<button class="btn btn-success" onclick="showCreateAdForm()">📦 Создать объявление</button>` : 
-                            `<button class="btn btn-primary" onclick="showAuthModal()">🔐 Войдите, чтобы создать объявление</button>`
+                            `<button class="btn btn-success" onclick="showCreateAdForm()">Создать объявление</button>` : 
+                            `<button class="btn btn-primary" onclick="showAuthModal()">Войдите, чтобы создать объявление</button>`
                         }
                     </div>
                 `;
@@ -1166,12 +1588,12 @@
                         <div class="ad-card" onclick="viewAd(${item.id})">
                             <div class="card-header">
                                 <h3 class="ad-title">${item.title}</h3>
-                                <div class="ad-date">📅 ${formatDate(item.date)} • 👁 ${item.views || 0}</div>
+                                <div class="ad-date">${formatDate(item.date)} • ${item.views || 0} просмотров</div>
                             </div>
                             <div class="card-content">
                                 <p class="ad-description">${item.description.substring(0, 100)}${item.description.length > 100 ? '...' : ''}</p>
                                 <div class="ad-price">${formatPrice(item.price)}</div>
-                                <div class="ad-location">📍 ${item.location}</div>
+                                <div class="ad-location">${item.location}</div>
                             </div>
                             <div class="card-footer">
                                 <div class="author-info">
@@ -1440,8 +1862,8 @@
                     <div class="detail-header">
                         <h1 class="detail-title">${item.title}</h1>
                         <div class="detail-meta">
-                            <span>📅 ${formatDate(item.date)}</span>
-                            <span>👁 ${item.views} просмотров</span>
+                            <span>${formatDate(item.date)}</span>
+                            <span>${item.views} просмотров</span>
                             <span>${getCategoryName(item.category)}</span>
                             <span>Автор: ${item.authorName}</span>
                         </div>
@@ -1455,7 +1877,7 @@
                         <div>
                             ${item.authorId === currentUser?.id || currentUser?.role === 'admin' ? `
                                 <button class="btn btn-danger" onclick="deleteNews(${item.id}); closeModal();">
-                                    ❌ Удалить новость
+                                    Удалить новость
                                 </button>
                             ` : ''}
                         </div>
@@ -1482,10 +1904,10 @@
                     <div class="detail-header">
                         <h1 class="detail-title">${item.title}</h1>
                         <div class="detail-meta">
-                            <span>📅 ${formatDate(item.date)}</span>
-                            <span>👁 ${item.views} просмотров</span>
+                            <span>${formatDate(item.date)}</span>
+                            <span>${item.views} просмотров</span>
                             <span>${getCategoryName(item.category)}</span>
-                            <span>📍 ${item.location}</span>
+                            <span>${item.location}</span>
                         </div>
                     </div>
                     
@@ -1507,10 +1929,22 @@
                         <div style="text-align: center;">
                             <div style="font-size: 14px; color: #65676b; margin-bottom: 5px;">Телефон продавца:</div>
                             <div class="phone-number">${item.phone}</div>
-                            <a href="tel:${item.phone}" 
-                               style="display: inline-block; margin-top: 10px; background: #42b72a; color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                               📞 Позвонить
-                            </a>
+                            
+                            <div class="contact-buttons">
+                                <a href="tel:${item.phone}" class="btn btn-call">
+                                    Позвонить
+                                </a>
+                                <button class="btn btn-message" onclick="sendMessage('${item.userId}', '${item.contactName}')">
+                                    Написать сообщение
+                                </button>
+                                <button class="btn btn-copy" onclick="copyPhone('${item.phone}')">
+                                    Копировать номер
+                                </button>
+                            </div>
+                            
+                            <div style="margin-top: 15px; font-size: 12px; color: #65676b;">
+                                Опубликовано: ${formatDate(item.date)}
+                            </div>
                         </div>
                     </div>
                     
@@ -1518,7 +1952,7 @@
                         <div>
                             ${item.userId === currentUser?.id || currentUser?.role === 'admin' ? `
                                 <button class="btn btn-danger" onclick="deleteAd(${item.id}); closeModal();">
-                                    ❌ Удалить объявление
+                                    Удалить объявление
                                 </button>
                             ` : ''}
                         </div>
@@ -1636,25 +2070,51 @@
             });
         }
         
+        function formatDisplayDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'short'
+            });
+        }
+        
         function getCategoryName(category) {
             const names = {
-                general: '📰 Общие новости',
-                events: '🎉 Мероприятия',
-                important: '⚠️ Важная информация',
-                culture: '🎭 Культура',
-                sports: '⚽ Спорт',
-                electronics: '📱 Электроника',
-                clothes: '👕 Одежда',
-                home: '🏠 Для дома',
-                auto: '🚗 Авто',
-                services: '🛠️ Услуги',
-                other: '📦 Разное'
+                general: 'Общие',
+                events: 'Мероприятия',
+                important: 'Важные',
+                culture: 'Культура',
+                sports: 'Спорт',
+                politics: 'Политика',
+                economy: 'Экономика',
+                education: 'Образование',
+                health: 'Здоровье',
+                electronics: 'Электроника',
+                clothes: 'Одежда',
+                home: 'Для дома',
+                auto: 'Авто',
+                services: 'Услуги',
+                other: 'Разное'
             };
-            return names[category] || '📦 Разное';
+            return names[category] || 'Разное';
         }
         
         function getInitials(name) {
             return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        }
+        
+        function timeAgo(date) {
+            const now = new Date();
+            const diff = now - date;
+            
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'только что';
+            if (minutes < 60) return `${minutes} мин назад`;
+            if (hours < 24) return `${hours} ч назад`;
+            if (days < 7) return `${days} дн назад`;
+            return formatDate(date.toISOString().split('T')[0]);
         }
         
         function showMyContent() {
@@ -1670,17 +2130,17 @@
             
             container.innerHTML = `
                 <div class="detail-container">
-                    <h2 style="margin-bottom: 20px;">👤 Мои публикации</h2>
+                    <h2 style="margin-bottom: 20px;">Мои публикации</h2>
                     
                     <div style="margin-bottom: 30px;">
-                        <h3 style="margin-bottom: 15px; color: #1877f2;">📰 Мои новости (${myNews.length})</h3>
+                        <h3 style="margin-bottom: 15px; color: #1877f2;">Мои новости (${myNews.length})</h3>
                         ${myNews.length > 0 ? `
                             <div style="display: flex; flex-direction: column; gap: 10px;">
                                 ${myNews.map(item => `
                                     <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                         <div>
                                             <strong>${item.title}</strong><br>
-                                            <small>${formatDate(item.date)} • 👁 ${item.views} просмотров</small>
+                                            <small>${formatDate(item.date)} • ${item.views} просмотров</small>
                                         </div>
                                         <div>
                                             <button class="btn btn-secondary" onclick="viewNews(${item.id})" style="padding: 5px 10px; font-size: 12px;">Просмотреть</button>
@@ -1693,14 +2153,14 @@
                     </div>
                     
                     <div>
-                        <h3 style="margin-bottom: 15px; color: #42b72a;">📦 Мои объявления (${myAds.length})</h3>
+                        <h3 style="margin-bottom: 15px; color: #42b72a;">Мои объявления (${myAds.length})</h3>
                         ${myAds.length > 0 ? `
                             <div style="display: flex; flex-direction: column; gap: 10px;">
                                 ${myAds.map(item => `
                                     <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                         <div>
                                             <strong>${item.title}</strong><br>
-                                            <small>${formatDate(item.date)} • 👁 ${item.views} просмотров • ${formatPrice(item.price)}</small>
+                                            <small>${formatDate(item.date)} • ${item.views} просмотров • ${formatPrice(item.price)}</small>
                                         </div>
                                         <div>
                                             <button class="btn btn-secondary" onclick="viewAd(${item.id})" style="padding: 5px 10px; font-size: 12px;">Просмотреть</button>
@@ -1720,7 +2180,7 @@
             
             container.innerHTML = `
                 <div class="detail-container">
-                    <h2 style="margin-bottom: 20px;">📦 Все объявления (${ads.length})</h2>
+                    <h2 style="margin-bottom: 20px;">Все объявления (${ads.length})</h2>
                     
                     ${ads.length > 0 ? `
                         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -1728,7 +2188,7 @@
                                 <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <strong>${item.title}</strong><br>
-                                        <small>${formatDate(item.date)} • 👁 ${item.views} просмотров • ${formatPrice(item.price)} • Автор: ${item.contactName}</small>
+                                        <small>${formatDate(item.date)} • ${item.views} просмотров • ${formatPrice(item.price)} • Автор: ${item.contactName}</small>
                                     </div>
                                     <div>
                                         <button class="btn btn-secondary" onclick="viewAd(${item.id})" style="padding: 5px 10px; font-size: 12px;">Просмотреть</button>
@@ -1747,7 +2207,7 @@
             
             container.innerHTML = `
                 <div class="detail-container">
-                    <h2 style="margin-bottom: 20px;">📰 Все новости (${news.length})</h2>
+                    <h2 style="margin-bottom: 20px;">Все новости (${news.length})</h2>
                     
                     ${news.length > 0 ? `
                         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -1755,7 +2215,7 @@
                                 <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <strong>${item.title}</strong><br>
-                                        <small>${formatDate(item.date)} • 👁 ${item.views} просмотров • Автор: ${item.authorName}</small>
+                                        <small>${formatDate(item.date)} • ${item.views} просмотров • Автор: ${item.authorName}</small>
                                     </div>
                                     <div>
                                         <button class="btn btn-secondary" onclick="viewNews(${item.id})" style="padding: 5px 10px; font-size: 12px;">Просмотреть</button>
@@ -1767,6 +2227,30 @@
                     ` : '<p>Нет новостей</p>'}
                 </div>
             `;
+        }
+        
+        // Функции для связи с создателем объявления
+        function copyPhone(phone) {
+            navigator.clipboard.writeText(phone).then(() => {
+                showNotification('Номер телефона скопирован');
+            }).catch(() => {
+                // Fallback для старых браузеров
+                const tempInput = document.createElement('input');
+                tempInput.value = phone;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showNotification('Номер телефона скопирован');
+            });
+        }
+        
+        function sendMessage(userId, userName) {
+            const message = prompt(`Написать сообщение пользователю ${userName}:`, 'Здравствуйте! Меня интересует ваше объявление...');
+            if (message) {
+                // В реальном приложении здесь была бы отправка сообщения
+                showNotification(`Сообщение для ${userName} отправлено (симуляция)`);
+            }
         }
         
         // ========================
